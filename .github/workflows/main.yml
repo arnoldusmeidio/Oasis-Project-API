@@ -21,8 +21,9 @@ jobs:
 
             - name: Build Project
               run: |
+                  cd api
                   npm ci
-                  npx prisma generate --schema=./api/prisma/schema.prisma
+                  npx prisma generate --schema=./prisma/schema.prisma
                   npm run build
 
             - name: Copy Files to Server
@@ -32,7 +33,7 @@ jobs:
                   username: ${{ secrets.EC2_USERNAME }}
                   key: ${{ secrets.EC2_PRIVATE_KEY }}
                   source: "./api, ./ecosystem.config.cjs"
-                  target: "~/oasis-api"
+                  target: "~/Oasis-Project-API"
 
             - name: Run App
               uses: appleboy/ssh-action@master
@@ -43,7 +44,7 @@ jobs:
                   script: |
                       export NVM_DIR=~/.nvm
                       source ~/.nvm/nvm.sh
-                      cd ~/oasis-api/api/src
-                      cp -r templates ~/oasis-api/api/dist/src/templates
-                      cd ~/oasis-api
+                      cd ~/Oasis-Project-API/api/src
+                      cp -r templates ~/Oasis-Project-API/api/dist/src/templates
+                      cd ~/Oasis-Project-API
                       pm2 start ecosystem.config.cjs
