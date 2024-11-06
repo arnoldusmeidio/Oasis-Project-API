@@ -1,0 +1,56 @@
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Payment Aprroval</title>
+      <style>
+         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f9f9f9; color: #333; }
+         .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow:
+         0 2px 10px rgba(0, 0, 0, 0.1); } h1 { color: #0056b3; } .reservation-details { margin: 20px 0; padding: 10px;
+         border: 1px solid #ccc; border-radius: 5px; } .footer { margin-top: 20px; font-size: 0.9em; color: #666; }
+      </style>
+   </head>
+   <body>
+      <div class="container">
+         <img
+            src="https://res.cloudinary.com/ddqx4doog/image/upload/v1730704701/image_jxgrog.png"
+            alt="oasis logo"
+            width="75%"
+         />
+         <h1>Payment Approval</h1>
+
+         <p>Dear {{name}},</p>
+
+         <p>
+            Thank you for choosing Oasis Resort for your upcoming stay. We are pleased to confirm your reservation and
+            look forward to welcoming you.
+         </p>
+
+         <p>
+            <strong>Payment Approved</strong><br />Your payment for booking with reference number:
+            {{bookingNumber}}
+            has been approved.
+         </p>
+
+         <p>Please <b>CONFIRM</b> from our website.</p>
+
+         <p>
+            If you have any questions or need to make changes to your reservation, please do not hesitate to contact us.
+         </p>
+
+         <p>We look forward to hosting you!</p>
+
+         <div class="footer">
+            <strong>Warm regards</strong>,<br />
+            <p>Oasis Resort team<br /></p>
+
+            <img
+               src="https://res.cloudinary.com/ddqx4doog/image/upload/v1730704701/logoSign_kb7iwb.png"
+               alt="oasis sign"
+               width="50%"
+            />
+            <p>Copyright © 2024 OASIS - All right reserved</p>
+         </div>
+      </div>
+   </body>
+</html>

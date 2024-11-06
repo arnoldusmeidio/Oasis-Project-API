@@ -1,0 +1,49 @@
+name: Deploy to EC2
+
+on:
+    push:
+        branches: [main]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [18.x]
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+
+            - name: Setup Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v2
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Build Project
+              run: |
+                  npm ci
+                  npx prisma generate --schema=./api/prisma/schema.prisma
+                  npm run build
+
+            - name: Copy Files to Server
+              uses: appleboy/scp-action@master
+              with:
+                  host: ${{ secrets.EC2_HOST }}
+                  username: ${{ secrets.EC2_USERNAME }}
+                  key: ${{ secrets.EC2_PRIVATE_KEY }}
+                  source: "./api, ./ecosystem.config.cjs"
+                  target: "~/oasis-api"
+
+            - name: Run App
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.EC2_HOST }}
+                  username: ${{ secrets.EC2_USERNAME }}
+                  key: ${{ secrets.EC2_PRIVATE_KEY }}
+                  script: |
+                      export NVM_DIR=~/.nvm
+                      source ~/.nvm/nvm.sh
+                      cd ~/oasis-api/api/src
+                      cp -r templates ~/oasis-api/api/dist/src/templates
+                      cd ~/oasis-api
+                      pm2 start ecosystem.config.cjs
