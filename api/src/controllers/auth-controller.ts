@@ -136,7 +136,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
                 domain: ".oasis-resort.xyz",
             })
             .status(200)
-            .json({ message: locale == "id" ? "Berhasil masuk" : "Login success", ok: true, role });
+            .json({ message: locale == "id" ? "Berhasil masuk" : "Login successully new", ok: true, role });
     } catch (error) {
         if (error instanceof ZodError) {
             return res.status(400).json({ message: error.errors[0].message, ok: false });
@@ -223,6 +223,7 @@ export async function googleLoginCallback(req: Request, res: Response, next: Nex
             httpOnly: false,
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30 * 365),
             sameSite: "lax",
+            domain: ".oasis-resort.xyz",
         });
 
         const successMessage = locale == "id" ? "Berhasil masuk" : "Login success";
@@ -233,6 +234,7 @@ export async function googleLoginCallback(req: Request, res: Response, next: Nex
                 expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
                 sameSite: "none", // need to change on production to be true
                 secure: true, // turn off while check on thunderclient
+                domain: ".oasis-resort.xyz",
             })
             .redirect(
                 role == "tenant"
