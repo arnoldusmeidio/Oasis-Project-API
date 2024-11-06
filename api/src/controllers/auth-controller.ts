@@ -122,7 +122,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
             httpOnly: false,
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30 * 365),
             sameSite: "lax",
-            domain: "www.oasis-resort.xyz",
+            domain: ".oasis-resort.xyz",
         });
 
         return res
@@ -133,7 +133,7 @@ export async function login(req: Request, res: Response, next: NextFunction) {
                     : new Date(Date.now() + 1000 * 60 * 60 * 24),
                 sameSite: "none", // need to change on production to be true
                 secure: true, // turn off while check on thunderclient
-                domain: "www.oasis-resort.xyz",
+                domain: ".oasis-resort.xyz",
             })
             .status(200)
             .json({ message: locale == "id" ? "Berhasil masuk" : "Login success", ok: true, role });
